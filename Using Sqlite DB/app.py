@@ -6,7 +6,6 @@ import sqlite3 as sql
 app = Flask(__name__)
 #create the object for the flask app
 
-
 @app.route('/',methods = ['POST', 'GET'])
 #create route to the host and route can handle two method GET and POST
 def index():
@@ -31,7 +30,7 @@ def index():
             #exception occurs and error apper then come to this block
             con.rollback()
             #get rollback to the 
-            flash("error in insert operation")
+            msg = "error in insert operation"
         finally:
             #always run this block
             con.close()

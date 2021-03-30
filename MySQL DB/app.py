@@ -1,19 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,flash
 from flask_mysqldb import MySQL
-# sqlite libray use to connect and make all the action on the sqlite DB
+# MySql library use to connect the  mysqlclient to our code 
 
 app = Flask(__name__)
 #create the object for the flask app
 
-#initialize all the MYSQL client to connect to communicate wit flask app 
+#initialize all the MYSQL client to connect to communicate with flask app 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'MyDB'
-
+app.secret_key = 'supersecretkey'
 mysql = MySQL(app)
 #create mysql object call
-
 
 @app.route('/', methods=['GET', 'POST'])
 #create route to the host and route can handle two method GET and POST
@@ -23,16 +22,17 @@ def index():
         details = request.form
         #getting data from the form and store that data into datails varibale
         firstName = details['fname']
-        lastName = details['lname']        
-        cur = mysql.connection.cursor()
+        lastName = details['lname']   
+        flash("Sucessfully inserted!!")   
+        # cur = mysql.connection.cursor()
         #open the connection
-        cur.execute("INSERT INTO MyUsers(firstName, lastName) VALUES (%s, %s)", (firstName, lastName))
+        # cur.execute("INSERT INTO MyUsers(firstName, lastName) VALUES (%s, %s)", (firstName, lastName))
         # query to insert into users table
-        mysql.connection.commit()
+        # mysql.connection.commit()
         #commit the data into db
-        cur.close()
+        # cur.close()
         # close the mysql connection
-        return 'success'
+        # return 'success'
     return render_template('index.html')
 
 
